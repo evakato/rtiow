@@ -5,6 +5,7 @@
 #include "rtweekend.h"
 #include "color.h"
 #include "hittable.h"
+#include "material.h"
 
 class camera {
   public:
@@ -82,8 +83,13 @@ class camera {
 
         if (world.hit(r, interval(0.001, infinity), rec)) {
             // vec3 direction = random_on_hemisphere(rec.normal); // normal diffuse
-            vec3 direction = rec.normal + random_unit_vector(); // lambertian reflection
-            return 0.5 * ray_color(ray(rec.p, direction), depth-1, world);
+            //vec3 direction = rec.normal + random_unit_vector(); // lambertian reflection
+            //return 0.5 * ray_color(ray(rec.p, direction), depth-1, world);
+            ray scattered;
+            color attenuation;
+            if (rec.mat->scatter(r, rec, attenuation, scattered))
+                return attenuation * ray_color(scattered, depth-1, world);
+            return color(0,0,0);
         }
 
         // scale the ray direction to unit length -1.0 < y < 1.0

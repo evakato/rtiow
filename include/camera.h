@@ -81,7 +81,8 @@ class camera {
             return color(0,0,0);
 
         if (world.hit(r, interval(0.001, infinity), rec)) {
-            vec3 direction = random_on_hemisphere(rec.normal);
+            // vec3 direction = random_on_hemisphere(rec.normal); // normal diffuse
+            vec3 direction = rec.normal + random_unit_vector(); // lambertian reflection
             return 0.5 * ray_color(ray(rec.p, direction), depth-1, world);
         }
 

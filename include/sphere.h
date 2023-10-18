@@ -20,11 +20,18 @@ class sphere : public hittable {
 
         // Find the nearest root that lies in the acceptable range.
         auto root = (-half_b - sqrtd) / a;
+        if (root < 0)
+          std::clog << root << std::flush;
+        // the following code distinguishes between objects in front of the camera
+        // and behind the camera. the t interval ranges from 0 to inf to account
+        // for only objects that are in front of the camera.
+        /*
         if (!ray_t.surrounds(root)) {
             root = (-half_b + sqrtd) / a;
             if (!ray_t.surrounds(root))
                 return false;
         }
+        */
 
         rec.t = root;
         rec.p = r.at(rec.t);

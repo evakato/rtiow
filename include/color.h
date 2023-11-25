@@ -23,7 +23,7 @@ void write_color(std::ostream &out, color pixel_color, int samples_per_pixel) {
     g *= scale;
     b *= scale;
 
-    // Apply the linear to gamma transform.
+    // transform linear to gamma space!
     r = linear_to_gamma(r);
     g = linear_to_gamma(g);
     b = linear_to_gamma(b);

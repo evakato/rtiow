@@ -81,10 +81,13 @@ class camera {
         if (depth <= 0)
             return color(0,0,0);
 
+        // test in this interval to avoid floating point rounding errors and
+        // shadow acne
         if (world.hit(r, interval(0.001, infinity), rec)) {
-            // vec3 direction = random_on_hemisphere(rec.normal); // normal diffuse
+            //vec3 direction = random_on_hemisphere(rec.normal); // normal diffuse
             //vec3 direction = rec.normal + random_unit_vector(); // lambertian reflection
             //return 0.5 * ray_color(ray(rec.p, direction), depth-1, world);
+
             ray scattered;
             color attenuation;
             if (rec.mat->scatter(r, rec, attenuation, scattered))
